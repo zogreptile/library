@@ -1,0 +1,43 @@
+@import '../../../../common/styles/mixins.scss';
+
+.checkbox_theme_standard {
+  .checkbox__inner {
+    cursor: pointer;
+  }
+
+  .checkbox__caption {
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .checkbox__control {
+    width: 22px;
+    height: 22px;
+    background-image: url('./checkbox-icon_unchecked.svg');
+    background-size: 22px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .checkbox__input {
+    @include visually-hidden();
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+    
+    &:focus,
+    &:hover {
+      + .checkbox__control {
+        opacity: .5;
+      }
+    }
+
+    &:checked {
+      + .checkbox__control {
+        background-image: url('./checkbox-icon_checked.svg');
+      }
+    }
+  }
+}
