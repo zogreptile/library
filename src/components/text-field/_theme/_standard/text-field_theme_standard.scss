@@ -1,0 +1,34 @@
+@import '../../../../common/styles/colors.scss';
+
+.text-field_theme_standard {
+  position: relative;
+
+  .text-field__caption {
+    padding: 0 2px;
+    position: absolute;
+    top: -9px;
+    left: 0;
+    font-size: 14px;
+    background-color: $white;
+  }
+
+  .text-field__input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid $gray-pale;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: inherit;
+
+    &:hover {
+      border-color: $blue-pale;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+      border-color: $blue;
+    }
+  }
+}

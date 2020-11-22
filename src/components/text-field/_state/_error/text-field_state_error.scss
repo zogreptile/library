@@ -1,0 +1,15 @@
+@import '../../../../common/styles/colors.scss';
+
+.text-field_state_error {
+  .text-field__input {
+    background-color: $pink-pale;
+    border-color: $red;
+
+    &:hover,
+    &:focus,
+    &:active {
+      outline: none;
+      border-color: $red;
+    }
+  }
+}
