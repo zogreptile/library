@@ -1,0 +1,30 @@
+.form_theme_standard {
+  .form__field {
+    + .form__field {
+      margin-top: 20px;
+    } 
+  }
+
+  .form__actions {
+    margin-top: 30px;
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+
+  .form__action {
+    text-align: center;
+
+    + .form__action {
+      margin-top: 20px;
+    }
+
+    @media (min-width: 768px) {
+      + .form__action {
+        margin-top: 0;
+        margin-left: 20px;
+      }
+    }
+  }
+}
