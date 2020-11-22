@@ -1,0 +1,15 @@
+.books-table__edit {
+  width: 40px;
+  height: 40px;
+  background-image: url('./edit-icon.svg');
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none;
+    opacity: .5;
+  }
+}
