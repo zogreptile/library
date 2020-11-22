@@ -1,0 +1,38 @@
+@import '../../../../common/styles/colors.scss';
+
+.modal_theme_standard {
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  overflow-y: auto;
+  background-color: $white;
+
+  @media (min-width: 768px) {
+    display: flex;
+    background-color: rgba($black, .5);
+  }
+
+  .modal__title {
+    margin-top: 0;
+    margin-bottom: 35px;
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 42px;
+  }
+
+  .modal__inner {
+    padding: 20px;
+    margin: auto;
+    border-radius: 4px;
+    background-color: $white;
+
+    @media (min-width: 768px) {
+      padding: 30px;
+      width: 768px;
+    }
+  }
+}
