@@ -1,0 +1,7 @@
+@import '../../../common/styles/mixins.scss';
+
+.button_only-icon {
+  .button__content {
+    @include visually-hidden();
+  }
+}
