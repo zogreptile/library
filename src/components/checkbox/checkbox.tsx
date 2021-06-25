@@ -1,9 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../helpers/classname';
 
-const Checkbox = (props) => {
+type TCheckboxProps = {
+  id: string;
+  caption: string;
+  name: string;
+  checked: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+}
+
+const Checkbox = (props: TCheckboxProps) => {
   return (
     <div className={classname('checkbox', props, { mods: { theme: 'standard' } })}>
       <label
@@ -29,18 +38,6 @@ const Checkbox = (props) => {
       </label>
     </div>
   );
-};
-
-Checkbox.propTypes = {
-  id: PropTypes.string,
-  caption: PropTypes.string,
-  name: PropTypes.string,
-  checked: PropTypes.bool,
-  onChange: PropTypes.func,
-};
-
-Checkbox.defaultProps = {
-  type: 'button',
 };
 
 export default Checkbox;
