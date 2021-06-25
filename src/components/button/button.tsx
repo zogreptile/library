@@ -1,13 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../helpers/classname';
 
-const Button = (props) => {
+interface TButtonProps {
+  children: React.ReactNode;
+  onClick: (event?: any) => void;
+  type?: 'button' | 'reset' | 'submit';
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+};
+
+const Button: React.FC<TButtonProps> = (props) => {
   const {
     children,
     onClick,
-    type,
+    type = 'button',
   } = props;
 
   return (
@@ -21,16 +28,6 @@ const Button = (props) => {
       </span>
     </button>
   );
-};
-
-Button.propTypes = {
-  children: PropTypes.node,
-  onClick: PropTypes.func,
-  type: PropTypes.oneOf(['button', 'reset', 'submit']),
-};
-
-Button.defaultProps = {
-  type: 'button',
 };
 
 export default Button;
