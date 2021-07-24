@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Node.js version:
+`12.16.3`
+
 ## Demo
 [https://zogreptile.github.io/library/#/](https://zogreptile.github.io/library/#/)
 
