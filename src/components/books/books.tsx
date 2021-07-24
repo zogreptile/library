@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { observer } from "mobx-react"
 
 import BooksTable from '../books-table';
@@ -6,17 +5,30 @@ import Button from '../button';
 
 import classname from '../../helpers/classname';
 
-function Books(props) {
+import { IBookIndexed } from '../../models';
+
+interface IBooksProps {
+  onAddBook: () => void;
+  onEditBook: (id?: number) => void;
+  onDeleteBook: (id: number) => void;
+  books: IBookIndexed[];
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+}
+
+const Books: React.FC<IBooksProps> = (props) => {
+  const { books = [] } = props;
+
   return (
     <section className={classname('books', props)}>
       <h1 className="books__title">
         Книги
       </h1>
 
-      {!!props.books.length
+      {!!books.length
         ? (
           <BooksTable
-            books={props.books}
+            books={books}
             onEditBook={props.onEditBook}
             onDeleteBook={props.onDeleteBook}
           />
@@ -39,26 +51,6 @@ function Books(props) {
       </div>
     </section>
   );
-}
-
-Books.propTypes = {
-  onAddBook: PropTypes.func,
-  onEditBook: PropTypes.func,
-  onDeleteBook: PropTypes.func,
-  books: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    author: PropTypes.string,
-    price: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    date: PropTypes.string,
-    inStock: PropTypes.bool,
-  })),
-}
-
-Books.defaultProps = {
-  books: [],
 }
 
 export default observer(Books);
