@@ -1,9 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../helpers/classname';
 
-const Modal = (props) => {
+interface IModalProps {
+  isOpen: boolean;
+  title: string;
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+}
+
+const Modal: React.FC<IModalProps> = (props) => {
   if (!props.isOpen) return null;
 
   return (
@@ -21,12 +27,6 @@ const Modal = (props) => {
       </div>
     </div>
   )
-};
-
-Modal.propTypes = {
-  isOpen: PropTypes.bool,
-  title: PropTypes.string,
-  children: PropTypes.node,
 };
 
 export default Modal;
