@@ -1,9 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../helpers/classname';
 
-const TextField = (props) => {
+interface ITextFieldProps {
+  id: string;
+  caption: string;
+  name: string;
+  value?: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+};
+
+const TextField = (props: ITextFieldProps) => {
   return (
     <div className={classname('text-field', props, { mods: { theme: 'standard' } })}>
       {props.caption && (
@@ -26,15 +36,6 @@ const TextField = (props) => {
       />
     </div>
   );
-};
-
-TextField.propTypes = {
-  id: PropTypes.string,
-  caption: PropTypes.string,
-  name: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
 };
 
 export default TextField;
