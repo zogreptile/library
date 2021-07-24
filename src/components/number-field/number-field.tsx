@@ -1,9 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../helpers/classname';
 
-const NumberField = (props) => {
+interface INumberFieldProps {
+  id: string;
+  caption?: string;
+  name: string;
+  value?: string | number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+}
+
+const NumberField: React.FC<INumberFieldProps> = (props) => {
   return (
     <div className={classname('number-field', props, { mods: { theme: 'standard' } })}>
       {props.caption && (
@@ -26,18 +36,6 @@ const NumberField = (props) => {
       />
     </div>
   );
-};
-
-NumberField.propTypes = {
-  id: PropTypes.string,
-  caption: PropTypes.string,
-  name: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
 };
 
 export default NumberField;
