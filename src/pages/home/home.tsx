@@ -5,32 +5,39 @@ import '../../components/container';
 import Books from '../../components/books';
 import BookModal from '../../components/book-modal';
 
-import booksStore from '../../store/books-store.js';
+import booksStore from '../../store/books-store';
+
+import { IBook, IBookIndexed } from '../../models';
 
 function HomeView() {
-  const [editableBookData, setEditableBookData] = useState({});
-  const [isAddBookModalOpen, setIsAddBookModalOpen] = useState(false);
-  const [isEditBookModalOpen, setIsEditBookModalOpen] = useState(false);
+  const [editableBookData, setEditableBookData] = useState<IBookIndexed>();
+  const [isAddBookModalOpen, setIsAddBookModalOpen] = useState<boolean>(false);
+  const [isEditBookModalOpen, setIsEditBookModalOpen] = useState<boolean>(false);
 
   const toggleAddBookModal = () => {
     setIsAddBookModalOpen(!isAddBookModalOpen);
   }
 
-  const toggleEditBookModal = (id) => {
-    if (!isEditBookModalOpen) {
+  const toggleEditBookModal = (id?: number) => {
+    if (!isEditBookModalOpen && !!id) {
       const editableBook = booksStore.getEditableBookData(id);
-      setEditableBookData({ ...editableBook });
+
+      if (editableBook) {
+        setEditableBookData({ ...editableBook });
+      }
     }
 
     setIsEditBookModalOpen(!isEditBookModalOpen);
   }
 
-  const addNewBook = (newBook) => {
-    booksStore.addBook({ ...newBook, id: Math.random() });
+  const addNewBook = (newBook: IBook) => {
+    booksStore.addBook(newBook);
   };
 
-  const editBook = (newData) => {
-    booksStore.editBook(editableBookData.id, newData);
+  const editBook = (editedBook: IBook) => {
+    if (editableBookData?.id) {
+      booksStore.editBook(editableBookData.id, editedBook);
+    }
   };
 
   return (
@@ -45,15 +52,15 @@ function HomeView() {
       <BookModal
         isOpen={isAddBookModalOpen}
         type="add"
-        onSubmit={addNewBook}
-        onClose={toggleAddBookModal}
+        submitHandler={addNewBook}
+        closeHandler={toggleAddBookModal}
       />
 
       <BookModal
         isOpen={isEditBookModalOpen}
         type="edit"
-        onSubmit={editBook}
-        onClose={toggleEditBookModal}
+        submitHandler={editBook}
+        closeHandler={toggleEditBookModal}
         bookData={editableBookData}
       />
     </Page>
