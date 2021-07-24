@@ -1,7 +1,9 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, IObservableArray, observable } from "mobx"
+
+import { IBook, IBookIndexed } from '../models';
 
 class BooksStore {
-  books = [
+  readonly books: IObservableArray<IBookIndexed> = observable([
     {
       id: Math.random(),
       title: 'Мастер и Маргарита',
@@ -18,31 +20,34 @@ class BooksStore {
       date: '1879',
       inStock: true,
     },
-  ];
+  ]);
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  addBook(newBook) {
+  addBook(book: IBook) {
+    const newBook = { ...book, id: Date.now() };
+
     this.books.push(newBook);
   }
 
-  getEditableBookData(id) {
+  getEditableBookData(id: number) {
     return this.books.find(book => book.id === id);
   }
 
-  editBook(id, newData) {
-    this.books.forEach((book, ind, books) => {
-      if (book.id === id) {
-        books[ind] = { ...books[ind], ...newData};
-      }
-    });
+  editBook(id: number, newData: IBook) {
+    const editableBookIndex = this.books.findIndex(book => book.id === id);
+
+    if (editableBookIndex > -1) {
+      this.books[editableBookIndex] = { ...this.books[editableBookIndex], ...newData};
+    }
   }
-  
-  deleteBook(id) {
+
+  deleteBook(id: number) {
     const bookToRemove = this.books.find(book => book.id === id)
-    this.books.remove(bookToRemove);
+
+    if (bookToRemove) this.books.remove(bookToRemove);
   }
 }
 
