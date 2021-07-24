@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import Form, {
   FormField,
@@ -11,19 +10,33 @@ import NumberField from '../number-field';
 import Checkbox from '../checkbox';
 import Button from '../button';
 
-const defaultFormState = {
-  author: '',
+import { IBook } from '../../models';
+
+interface IBookFormProps {
+  type: 'add' | 'edit';
+  submitHandler: (bookData: IBook) => void;
+  cancelHandler: (id?: number) => void;
+  bookData?: IBook;
+};
+
+interface IInvalidFields {
+  [formFieldName: string]: boolean;
+};
+
+const defaultFormState: IBook = {
   title: '',
+  author: '',
   price: 0,
   date: '',
   inStock: true,
 };
 
-const BookForm = (props) => {
-  const [formState, setFormState] = useState({ ...defaultFormState, ...props.bookData });
-  const [invalidFields, setInvalidFields] = useState({});
+const BookForm: React.FC<IBookFormProps> = (props) => {
+  const { bookData = {} } = props;
+  const [formState, setFormState] = useState<IBook>({ ...defaultFormState, ...bookData });
+  const [invalidFields, setInvalidFields] = useState<IInvalidFields>({});
 
-  const onFieldChange = (e) => {
+  const onFieldChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { target } = e;
     const { name } = target;
 
@@ -43,7 +56,7 @@ const BookForm = (props) => {
     });
   }
 
-  const onFieldFocus = (e) => {
+  const onFieldFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
     const { name } = e.currentTarget;
 
     setInvalidFields({
@@ -52,7 +65,7 @@ const BookForm = (props) => {
     });
   }
 
-  const submitForm = (e) => {
+  const submitForm = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     if (!formState.author.trim() || !formState.title.trim()) {
@@ -64,13 +77,15 @@ const BookForm = (props) => {
       return;
     }
 
-    props.onSubmit(formState);
+    props.submitHandler(formState);
     setFormState(defaultFormState);
-    props.onCancel();
+    props.cancelHandler();
   }
 
   return(
-    <Form>
+    <Form
+      onSubmit={submitForm}
+    >
       <FormField>
         <TextField
           mods={{ ...(invalidFields.author ? { state: 'error' } : {}) }}
@@ -145,29 +160,12 @@ const BookForm = (props) => {
               theme: 'standard',
               type: 'secondary',
             }}
-            onClick={props.onCancel}
+            onClick={props.cancelHandler}
           >Отмена</Button>
         </FormAction>
       </FormActions>
     </Form>
   );
 }
-
-BookForm.propTypes = {
-  type: PropTypes.oneOf(['add', 'edit']),
-  onSubmit: PropTypes.func,
-  onCancel: PropTypes.func,
-  bookData: PropTypes.shape({
-    title: PropTypes.string,
-    author: PropTypes.string,
-    price: PropTypes.number,
-    date: PropTypes.string,
-    inStock: PropTypes.bool,
-  }),
-};
-
-BookForm.defaultProps = {
-  bookData: {},
-};
 
 export default BookForm;
