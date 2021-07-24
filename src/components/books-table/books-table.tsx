@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Table, {
   TableHead,
@@ -9,7 +8,17 @@ import Table, {
 } from '../table';
 import Button from '../button';
 
-function BooksTable(props) {
+import { IBookIndexed } from '../../models';
+
+interface IBooksTableProps {
+  onEditBook: (id?: number) => void;
+  onDeleteBook: (id: number) => void;
+  books: IBookIndexed[];
+}
+
+const BooksTable: React.FC<IBooksTableProps> = (props) => {
+  const { books = [] } = props;
+
   return (
     <Table
       mods={{ type: 'books' }}
@@ -48,7 +57,7 @@ function BooksTable(props) {
       </TableHead>
 
       <TableBody>
-        {props.books.map(book => (
+        {books.map(book => (
           <TableRow key={book.id}>
             <TableCell>
               {book.title}
@@ -101,24 +110,5 @@ function BooksTable(props) {
     </Table>
   )
 };
-
-BooksTable.propTypes = {
-  onEditBook: PropTypes.func,
-  onDeleteBook: PropTypes.func,
-  books: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    author: PropTypes.string,
-    price: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-    date: PropTypes.string,
-    inStock: PropTypes.bool,
-  })),
-}
-
-BooksTable.defaultProps = {
-  books: [],
-}
 
 export default BooksTable;
