@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../helpers/classname';
 
-const Page = (props) => (
+interface IPageProps {
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+}
+
+const Page: React.FC<IPageProps> = (props) => (
   <div className={classname('page', props)}>
     {props.children}
   </div>
 );
-
-Page.propTypes = {
-  children: PropTypes.node,
-};
 
 export default Page;
