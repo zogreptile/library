@@ -1,9 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import classname from '../../../helpers/classname';
 
-const TableCell = (props) => {
+interface ITableCell {
+  mix?: string;
+  mods?: Record<string, string | boolean>;
+}
+
+const TableCell: React.FC<ITableCell> = (props) => {
   const CellTag = props.mods && props.mods.type === 'heading' ? 'th' : 'td';
 
   return (
@@ -13,10 +17,6 @@ const TableCell = (props) => {
       </div>
     </CellTag>
   );
-};
-
-TableCell.propTypes = {
-  children: PropTypes.node,
 };
 
 export default TableCell;
